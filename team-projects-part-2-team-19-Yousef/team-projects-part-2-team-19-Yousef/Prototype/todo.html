@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang = "en">
+
+
+<script>
+    function getCookie(name) {
+
+        const cookieName = name + "=";
+        const decodedCookie = decodeURIComponent(document.cookie);
+        
+        const cookieArray = decodedCookie.split(';');
+
+        for (let i = 0; i < cookieArray.length; i++) {
+            let cookie = cookieArray[i];
+            while (cookie.charAt(0) === ' ') {
+                cookie = cookie.substring(1);
+            }
+
+            if (cookie.indexOf(cookieName) === 0) {
+                const value = cookie.substring(cookieName.length, cookie.length);
+                
+                return value;
+            }
+
+        }
+
+        
+        return "InvalidUser";
+    }
+
+
+</script>
+
+
+
+<head>
+
+    <meta charset = "utf-8">
+    <meta name = "viewport" content = "width = device-width, initial-scale = 1">
+
+    <!-- External scripts such as Bootstrap -->
+    <link rel = "stylesheet" href = "https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity = "sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin = "anonymous">
+
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src = "https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity = "sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin = "anonymous"></script>
+    <script src = "https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity = "sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin = "anonymous"></script>
+
+    <link rel = "stylesheet" href = "https://site-assets.fontawesome.com/releases/v6.4.0/css/all.css">
+    <link rel = "stylesheet" href = "https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-solid.css">
+    <link rel = "stylesheet" href = "https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-regular.css">
+    <link rel = "stylesheet" href = "https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-light.css">
+
+    <!-- External CSS file -->
+    <script src = "scripting.js"></script>
+    <script src = "todo.js" defer></script>
+    <link rel = "stylesheet" type = "text/css" href = "stylesheet.css">
+
+    <script>
+
+        //gets the member (team member, team leader, manager)
+        var selectedID;
+            
+        function formatDate(dateString) {
+
+            const date = new Date(dateString);
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+            const day = date.getDate().toString().padStart(2, '0');
+            return `${year}-${month}-${day}`;
+
+        };
+
+        //Adding new tasks
+        function newElement(todoID, title, desc, date, status) {
+
+            var ul;
+            if (status === 'todoList1') {
+                ul = document.getElementById('todoList1');
+
+            } else if (status === 'doingList') {
+                ul = document.getElementById('doingList1');
+
+            } else if (status === 'doneList') {
+                ul = document.getElementById('doneList1');
+
+            } else if (status === 'todoList') {
+                ul = document.getElementById('todoList1');
+
+            } else {
+                console.error('Invalid status:', status);
+                return;
+            }
+
+            //creates unique id
+            var li = document.createElement('button');
+            var uniqueId = todoID
+
+            currentDate = new Date();
+
+	    // create the divs for the new element
+            var taskDiv = document.createElement('div');
+            taskDiv.setAttribute("class", "grid-container todo-node");
+            li.id = uniqueId;
+            li.setAttribute("draggable", "true");
+            li.style.background = "none";
+            li.style.border = "none";
+			
+            var taskColour = document.createElement('div');
+            taskColour.setAttribute("class", "rectangle");
+
+            if ((date - currentDate) / 86400000 <= 0) {
+                taskColour.setAttribute("style", "background-color: red;");
+
+            } else if ((date - currentDate) / 86400000 <= 7) {
+                taskColour.setAttribute("style", "background-color: orange;");
+
+            } else {
+                taskColour.setAttribute("style", "background-color: green;");
+			};
+
+            taskDiv.appendChild(taskColour);
+			
+            var taskInnerDiv1 = document.createElement('div');
+            taskInnerDiv1.setAttribute("class", "todo-div-1");
+            
+            var taskTitle = document.createElement('h3');
+            taskTitle.innerText = title;
+            taskInnerDiv1.appendChild(taskTitle);
+            
+            var taskDesc = document.createElement('p');
+            taskDesc.setAttribute("class", "todo-description");
+
+            if (desc.length < 250) {
+                taskDesc.innerText = desc;
+            }
+
+            else { 
+                taskDesc.innerText = desc.substring(0, 190) + "...";
+            }
+
+            taskInnerDiv1.appendChild(taskDesc);
+            
+            
+            var taskInnerDiv2 = document.createElement('div');
+            taskInnerDiv2.setAttribute("class", "todo-div-2");
+            
+            var stopwatchIcon = document.createElement('img');
+            stopwatchIcon.setAttribute("src", "Assets/svg-icons/stopwatch.svg");
+            stopwatchIcon.setAttribute("width", "25");
+            stopwatchIcon.setAttribute("height", "25");
+            stopwatchIcon.setAttribute("style", "float: right; margin-right: 8px;");
+            taskInnerDiv2.appendChild(stopwatchIcon);
+            
+            var taskDue = document.createElement('u');
+            taskDue.setAttribute("class", "todo-duedate");
+            taskDue.innerText = date.toString();
+            taskInnerDiv2.appendChild(taskDue);
+            
+            taskDiv.appendChild(taskInnerDiv1);
+            taskDiv.appendChild(taskInnerDiv2);
+            
+            $("#createTaskOverlay").fadeOut();
+
+	    // eventlistener to edit the tasks
+            li.addEventListener("click", function () {
+                selectedID = this.id;
+                console.log(selectedID);
+					
+                clearOverlay();
+					
+                $('#createTaskOverlay').fadeIn();
+                keepInfoOverlay(title, desc, date);
+                $('#createTaskButton').hide();
+                $('#editTaskButton').show();
+                $('#deleteTaskButton').show();
+            });
+
+            li.appendChild(taskDiv);
+            ul.appendChild(li);
+
+        };
+
+	// manipulate overlay to edit function
+	    
+        function clearOverlay() {
+
+            document.getElementById("createTaskTitle").value = "";
+            document.getElementById("createTaskDesc").value = "";
+            document.getElementById("createTaskDue").value = null;
+
+        };
+
+        function keepInfoOverlay(title, desc, date, project) {
+
+            document.getElementById("createTaskTitle").value = title;
+            document.getElementById("createTaskDesc").value = desc;
+            document.getElementById("createTaskDue").value = formatDate(date);
+
+        };
+
+        function editElement() {
+
+            var extractedInfoTitle = $("#createTaskTitle").val();
+            var extractedInfoDesc = $("#createTaskDesc").val();
+            var extractedInfoDate = $("#createTaskDue").val().toString();
+            //var extractedInfoStatus = 
+
+            $("#"+ selectedID + " h3").text(extractedInfoTitle);
+            $("#"+ selectedID + " .todo-description").text(extractedInfoDesc);
+            $("#" + selectedID + " .todo-duedate").text(extractedInfoDate);
+
+            var postData = {
+                id: selectedID,
+                title: extractedInfoTitle,
+                description: extractedInfoDesc,
+                date: extractedInfoDate,
+                //status: 
+                
+            };
+            
+
+            // Send the data to the server using AJAX
+            $.ajax({
+                type: "POST",
+                url: "To-DoListTaskEditor.php",
+                data: postData,
+                success: function (response) {
+                    // Handle the response from the server if needed
+                    console.log("Update successful:", response);
+                },
+                error: function (xhr, status, error) {
+                    // Handle errors
+                    console.error("Update failed:", error);
+                }
+            });
+				
+            $('#createTaskOverlay').fadeOut();
+            clearOverlay();
+
+        };
+        
+        function deleteElement() {
+            
+            // Delete HTML element
+            extractedID = selectedID
+            var element = document.getElementById(extractedID);
+             if (element) {
+               element.remove();
+            } 
+            else {
+                console.log("Element with id '" + id + "' not found.");
+            }
+            $('#createTaskOverlay').fadeOut();
+            clearOverlay();
+
+            // Update Database
+            var postData = {
+                id:selectedID
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "To-DoListTaskDelete.php",
+                data: postData
+            });
+        };
+
+        var columnName;
+        function columnType(columnID) {
+        columnName = columnID;
+        };
+
+    </script>
+
+    <script>
+	// scripts to open and close the navigation
+        $(document).ready(function(){
+
+            $(".closebtn").click(function(){
+
+                $(".static").fadeOut();
+                closeNav();
+
+            });
+
+            $(".burgerImg").click(function(){
+
+                $(".static").fadeIn();
+                openNav();
+
+            });
+
+            $("#closeCreateTask").click(function(){
+
+                $("#createTaskOverlay").fadeOut();
+
+            });
+
+
+            $(".nav-link").hover(function(){
+
+                $(this).css("background-color", "#424A52");
+            }, function(){
+
+                $(this).css("background-color", "#343A40");
+
+            });
+           
+        });
+
+    </script>
+
+    <script>
+
+        $(document).ready(function(){
+
+            $(".closebtn").click(function(){
+
+                $(".static").fadeOut();
+                closeNav();
+
+            });
+
+            $(".burgerImg").click(function(){
+
+                $(".static").fadeIn();
+                openNav();
+
+            });
+
+            $("#closeCreateTask").click(function(){
+
+                $("#createTaskOverlay").fadeOut();
+
+            });
+
+            /*************/
+
+            $(".nav-link").hover(function(){
+
+                $(this).css("background-color", "#424A52");
+            }, function(){
+
+                $(this).css("background-color", "#343A40");
+
+            });
+
+        });
+
+    </script>
+
+    <title> Task Manager </title>
+    <link rel = "icon" href = "Assets/Logo.ico" type = "image/x-icon">
+
+</head>
+
+<body class = "index" onload = "LoadTask()">
+
+    <script src = "navBar.js"></script>
+
+
+    <div style = "margin: auto; top: 80px; width: 40%; position: relative; text-align: center; font-size: 28px; "><p><b><u>To-do List</u></b></p></div>
+
+    <div class = "TodoMenu">
+
+        <div class="ToDoColumn" id="todoList" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+            <p style="text-align: center;">To-Do</p>
+            <ul id="todoList1" ondragstart="drag(event)"></ul>
+
+        </div>
+        
+        <div class="ToDoColumn" id="doingList" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+            <p style="text-align: center;">In Progress</p>
+            <ul id="doingList1" ondragstart="drag(event)"></ul>
+
+        </div>
+        
+        <div class="ToDoColumn" style="border-right-style: solid;" id="doneList" ondrop="drop(event)" ondragover="allowDrop(event)">
+            
+            <p style="text-align: center;">Done</p>
+            <ul id="doneList1" ondragstart="drag(event)"></ul>
+
+        </div>
+        
+
+    </div>
+
+    
+    <button id="createPersonalTask" class="btn-outline-info btn" onclick="$('#createTaskButton').show(); $('#editTaskButton').hide();$('#deleteTaskButton').hide();  $('#createTaskOverlay').fadeIn(); clearOverlay(); columnType('todoList');" value="+Element">Add a Personal Task</button>
+
+
+    <div id = "createTaskOverlay" class = "todoOverlay">
+
+        <div>
+            <form method="post" action="To-DoListTaskManager.php">
+                <div id="createTask">
+
+                    <div class="input-group mb-3">
+
+                        <h5 style="margin: 25px 0px 10px 20px; width: 90%;"> Task Title </h5>
+                        <a id="closeCreateTask" style="width: 5%;">
+                            <img src="Assets/svg-icons/arrow-left.svg" class="clickable-image" alt="CollapseIcon" width="20" height="20" style="filter: invert(1); margin: auto;">
+                        </a>
+                        <input type="text" id="createTaskTitle" name="title" class="form-control" maxlength="20" style="margin: 0px 40px 15px 20px; width: 700px" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                        <h5 style="margin: 0px 0px 10px 20px; width: 100%;"> Task Description </h5>
+                        <textarea id="createTaskDesc" name="description" style="margin: 0px 40px 40px 20px; width: 740px; height: 150px; resize: none;" aria-label="With textarea"></textarea>
+
+                        <div>
+
+                            <h5 style="margin: 0px 0px 10px 20px; width: 100%;"> Due Date </h5>
+                            <input id="createTaskDue" name="date" style="margin: 0px 40px 40px 20px; width: 300px;" type="date" />
+
+                        </div>
+
+                        <button id="createTaskButton" type="submit" class="btn btn-success" style="margin:auto; display: block;" /*onclick ="newElement(columnName);*/">Create Task</button>
+                        <button id="editTaskButton" type="button" class="btn btn-success" style="margin:auto;" onclick="editElement();">Edit Task</button>
+                        <button id="deleteTaskButton" type="button" class="btn btn-danger" style="margin:auto;" onclick="deleteElement();">Delete Task</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <div id = "inviteOverlay" class = "overlay">
+
+        <div>
+
+            <div id = "createInvite">
+
+                <div class = "input-group mb-3">
+
+                    <h5 style = "margin: 25px 0px 10px 20px; width: 90%;"> Email </h5>
+                    <a id = "closeInvite" style = "width: 5%;" onclick = '$("#inviteOverlay").fadeOut();'>
+                        <img src = "Assets/svg-icons/arrow-left.svg" class = "clickable-image" alt = "CollapseIcon" width = "20" height = "20" style = "filter: invert(1); margin: auto;">
+                    </a>
+
+                    <div class = "input-group mb-3" style = "margin: 0px 40px 15px 20px; width: 750px">
+
+                        <div class = "input-group-prepend">
+
+                            <span class = "input-group-text" id = "basic-addon1">@</span>
+
+                        </div>
+
+                        <input id = "postInvite" type="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
+
+                    </div>
+
+                    <h5 style = "margin: 0px 0px 10px 20px; width: 100%;"> Additional Content </h5>
+                    <textarea id = "postInviteDesc" style = "margin: 0px 40px 40px 20px; width: 740px; height: 250px; resize: none;" aria-label = "With textarea"></textarea>
+                    <button id = "submitInviteButton" type = "button" class = "btn btn-success" style = "margin: auto;" onclick="$('#inviteOverlay').fadeOut();">Send Invite</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+
+<script>
+
+    document.getElementById("Member").text = getCookie("member");
+
+
+    const httpRequestTask = new XMLHttpRequest();
+    httpRequestTask.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+        todos = this.responseText;
+        var todosArray = JSON.parse(todos);
+        for (let i = 0; i < todosArray.length; i++) {
+            var todo = todosArray[i];
+            var tempID = todo["To-DoID"];
+            var tempTitle = todo.Title;
+            var tempDescription = todo.Description;
+            var tempDeadline = todo.Deadline;
+            var tempStatus = todo.Status;
+
+            console.log(tempID);
+            newElement(tempID, tempTitle, tempDescription, tempDeadline, tempStatus);
+        }
+    }
+};
+
+
+
+    function LoadTask() {
+        console.log("Load Tasks");
+
+        //retreive data from database by sending an httpRequest
+        httpRequestTask.open("POST", "To-DoListTaskGetter.php", true);
+        httpRequestTask.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        httpRequestTask.send("TITLE=none" + "&DESC=none" + "&GETPOSTS=True");
+    }
+
+</script>
+

@@ -1,0 +1,120 @@
+.manager-header-container {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+  }
+
+.input-group-prepend {
+    margin: 20px 20px 20px 20px;
+}
+
+.projects-title {
+
+    font-family: 'Arial', sans-serif; 
+    color: #2c3e50; 
+    text-transform: uppercase; 
+    letter-spacing: 3px; 
+    font-weight: bold; 
+    font-size: 36px; 
+    text-align: center; 
+    margin: 20px 0; 
+    padding: 10px; 
+    border-bottom: 2px solid #3498db; 
+    display: inline-block;
+    background-color: #ecf0f1; 
+    border-radius: 5px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.add-project-button-container {
+    margin: 0 50px 0 140px;
+}
+
+.add-project-button {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* A clean, modern font */
+    font-size: 16px; /* Adjust the size as needed */
+    color: white; /* Text color */
+    background-color: #1dab66; /* A pleasant shade of blue */
+    padding: 10px 20px; /* Top and bottom padding, left and right padding */
+    border: none; /* No border for a modern look */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* A subtle shadow */
+    cursor: pointer; /* Changes the cursor to indicate it's clickable */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transition for hover effects */
+  }
+  
+  .add-project-button:hover {
+    background-color: #29b97f; /* Darker shade of blue on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Larger shadow on hover for a 'lifted' effect */
+  }
+  
+  .add-project-button:active {
+    background-color: #1a7622; /* Even darker shade for a 'pressed' effect */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Smaller shadow to simulate the button being pressed */
+  }
+
+
+.project-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    border-radius: 8px;
+    margin: 20px 20px 20px 20px;
+}
+
+.project-card {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    width: calc(33.333% - 20px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.details-btn {
+    background: #5cb85c;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.project-description {
+    display: none;
+    padding-top: 10px;
+}
+
+.project-deadline {
+    padding-top: 10px;
+    font-weight: bold;
+}
+
+.manager-header-container #searchPostButton {
+    background: none;
+    margin: 0;
+    border: none;
+    padding: 0;
+}
+
+.manager-header-container .input-group-text {
+    border-radius: 0 0 0 0;
+}
+
+@media (max-width: 768px) {
+    .project-card {
+        width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .project-card {
+        width: 100%;
+    }
+}

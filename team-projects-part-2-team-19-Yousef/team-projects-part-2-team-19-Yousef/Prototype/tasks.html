@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang = "en">
+
+<head>
+
+    <meta charset = "utf-8">
+    <meta name = "viewport" content = "width = device-width, initial-scale = 1">
+
+    <!-- External scripts such as Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src = "https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity = "sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin = "anonymous"></script>
+    <script src = "https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity = "sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin = "anonymous"></script>
+
+    <link rel = "stylesheet" href = "https://site-assets.fontawesome.com/releases/v6.4.0/css/all.css">
+    <link rel = "stylesheet" href = "https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-solid.css">
+    <link rel = "stylesheet" href = "https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-regular.css">
+    <link rel = "stylesheet" href = "https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-light.css">
+
+    <!-- External CSS file -->
+    <script src = "scripting.js"></script>
+    <script src = "tasks.js" defer></script>
+    <script src = "tasksExtract.js"></script>
+    <link rel = "stylesheet" type = "text/css" href = "stylesheet.css">
+
+    <script>
+
+        //checkSession();
+
+        $(document).ready(function(){
+            loadTaskPage();
+            
+            $(".closebtn").click(function(){
+
+                $(".static").fadeOut();
+                closeNav();
+
+            });
+
+            $(".burgerImg").click(function(){
+
+                $(".static").fadeIn();
+                openNav();
+
+            });
+
+            $("#closeCreateTask").click(function(){
+
+                $("#createTaskOverlay").fadeOut();
+
+            });
+
+            /*************/
+
+            $(".nav-link").hover(function(){
+
+                $(this).css("background-color", "#424A52");
+            }, function(){
+
+                $(this).css("background-color", "#343A40");
+
+            });
+        
+            /**************
+            Hoverable button colour change, couldn't implement
+            $(".hoverable-icon").hover(function() {
+
+            $(this).attr("fill", "#FFFFFF");    
+            }, function() {
+
+                $(this).attr("fill", "#000000");
+                console.log("yep");
+
+            });
+            ****************/
+           
+        });
+    </script>
+
+    <title> Task Manager </title>
+    <link rel = "icon" href = "Assets/Logo.ico" type = "image/x-icon">
+
+</head>
+
+<body class = "index">
+
+    <script src = "navBar.js"></script>
+
+    <div id = "mySidenav" class = "d-flex flex-column flex-shrink-0 text-white bg-dark sidenav">
+
+        <div class = "static">
+
+            <a class = "closebtn">
+                <img src = "Assets/svg-icons/arrow-left.svg" class = "clickable-image" alt = "CollapseIcon" width = "20" height = "20" style = "fill: #ffffff">
+            </a>
+
+            <hr>
+            <ul class = "nav nav-pills flex-column mb-auto navbar-icon" >
+
+                <li id="homeNav">
+                    <a href = "home.html" class = "nav-link text-white">
+                    <p><img src="Assets/homepage.png" width="28" height="28" style="filter: invert(1); margin-right: 4px;">Home</p>
+
+                    <div class = "progress" role = "progressbar" aria-label = "Success example" aria-valuemin = "0" aria-valuemax = "100">
+                    <div class = "progress-bar bg-success" style = "width: 0%"></div>
+                    </div>
+                    </a>
+                </li>
+
+                <li id="tasksNav">
+                    <a href = "tasks.html" class = "nav-link text-white">
+                    <p><img src = "Assets/svg-icons/list-check.svg" alt = "checklistIcon" width = "25" height = "25">&nbsp;Task Manager</p>
+
+                    <div class = "progress" role = "progressbar" aria-label = "Warning example" aria-valuemin = "0" aria-valuemax = "100">
+                    <div class = "progress-bar bg-warning" style = "width: 0%"></div>
+                    </div>
+                    </a>
+                </li>
+
+                <li id="informationNav">
+                    <a href = "information.html" class = "nav-link text-white">
+                    <p><img src = "Assets/svg-icons/info.svg" alt = "infoIcon" width = "25" height = "25">&nbsp;Information</p>
+
+                    <div class = "progress" role = "progressbar" aria-label = "Danger example" aria-valuemin = "0" aria-valuemax = "100">
+                    <div class = "progress-bar bg-danger" style = "width: 0%"></div>
+                    </div>
+                    </a>
+                </li>
+
+                <li id="dashboardNav">
+                    <a id="dashboardNavLink" href = "dashboard.html" class = "nav-link text-white">
+                    <p><img src = "Assets/svg-icons/teams.svg" alt = "teamsIcon" width = "25" height = "25">&nbsp;Dashboard</p>
+
+                    <div class = "progress" role = "progressbar" aria-label = "Purple example" aria-valuemin = "0" aria-valuemax = "100">
+                    <div class = "progress-bar bg-purple" style = "width: 0%"></div>
+                    </div>
+                    </a>
+                </li>
+
+            </ul>
+            <hr>
+
+        </div>
+
+    </div>
+
+
+
+    <!--<div class = "TaskMenu shadow-lg">
+        <div style = "border-radius: 10px 10px 0 0; width: 100%; position: block; text-align: center; font-size: 28px; background-image: linear-gradient(to bottom,#8AB7B0,#C5C5C5); "><p style="margin-bottom: 0px; color: #8c8c8c"><b>Tasks</b></p></div>
+        <div class = "column w-auto" style = "user-drag:none" id = "todoData" ondrop = "drop(event)" ondragover = "allowDrop(event)">
+
+            <ul id = "todoList" ondragstart = "drag(event)"></ul>
+
+        </div>
+
+    </div> -->
+
+    <div class = "TaskMenu mx-auto shadow-lg">
+        <div class="tasks-header mb-3"><p style="margin-bottom: 0px; color: #8c8c8c"><b>All Tasks</b></p></div>
+        <div style="width: 100%;"><div style="display: flex;">
+            <div class="btn-group">
+            <button type="button" class="btn btn-outline-secondary dropdown-toggle icon-no-margin ml-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span id="dropdownButtonFilter">
+                             Show
+                        </span>
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" onclick="dropdownSearchFilter('filter', 'All');">
+                    All
+                </a>
+                <a class="dropdown-item" onclick="dropdownSearchFilter('filter', 'Overdue');">
+                    Overdue
+                </a>
+                <div class="dropdown-divider"></div>
+                <h6 class="dropdown-header">Upcoming</h6>
+                <a class="dropdown-item" onclick="dropdownSearchFilter('filter', 'Next 7 days');">
+                    Next 7 days
+                </a>
+                <a class="dropdown-item" onclick="dropdownSearchFilter('filter', 'Next 30 days');">
+                    Next 30 days
+                </a>
+                <a class="dropdown-item" onclick="dropdownSearchFilter('filter', 'Next 3 months');">
+                    Next 3 months
+                </a>
+                <a class="dropdown-item" onclick="dropdownSearchFilter('filter', 'Next 6 months');">
+                    Next 6 months
+                </a>
+            </div></div>
+            <div class="btn-group">
+            <button type="button" class="btn btn-outline-secondary dropdown-toggle icon-no-margin ml-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span id="dropdownButtonSearch">
+                            Search By
+                        </span>
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" onclick="dropdownSearchFilter('search', 'Title');">
+                    Title
+                </a>
+                <a class="dropdown-item" onclick="dropdownSearchFilter('search', 'Project');">
+                    Project
+                </a>
+            </div></div>
+
+            <div class="input-group ml-auto mr-3" style="width: 30%;">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><img src="Assets/search.png" width="25" height="25"></span>
+                </div>
+                <input type="text" id = 'taskSearch' class="form-control" placeholder="Search tasks..." aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+        </div>
+        </div>
+        <hr style="border-top: 3px dotted #bbb; width: 97%;">
+        <div class = "column" style = "user-drag:none; height: 500px;" id = "todoData" ondrop = "drop(event)" ondragover = "allowDrop(event)">
+
+            <ul id = "taskList" ondragstart = "drag(event)"></ul>
+
+        </div>
+
+    </div>
+
+    <!-- Create a Task functionality, kept for team leader implementation
+    
+    <button id = "createPersonalTask" class = "btn-outline-info btn" onclick = "$('#createTaskButton').show(); $('#editTaskButton').hide();  $('#createTaskOverlay').fadeIn(); clearOverlay();" value = "+Element">Add a Personal Task</button>
+
+    <div id = "createTaskOverlay" class = "overlay">
+
+        <div>
+
+            <div id = "createTask" class="taskOverlay">
+
+                <div class = "input-group mb-3">
+
+                    <h5 style = "margin: 25px 0px 10px 20px; width: 90%;"> Task Title </h5>
+                    <a id = "closeCreateTask" style = "width: 5%;">
+                        <img src = "Assets/svg-icons/arrow-left.svg" class = "clickable-image" alt = "CollapseIcon" width = "20" height = "20" style = "filter: invert(1); margin: auto;">
+                    </a>
+                    <input type = "text" id = "createTaskTitle" class = "form-control" maxlength = "35" style = "margin: 0px 40px 15px 20px; width: 700px" aria-label = "Default" aria-describedby = "inputGroup-sizing-default">
+                    <h5 style = "margin: 0px 0px 10px 20px; width: 100%;"> Task Description </h5>
+                    <textarea id = "createTaskDesc" style = "margin: 0px 40px 40px 20px; width: 740px; height: 150px; resize: none;" aria-label = "With textarea"></textarea>
+                    
+                    <div>
+
+                        <h5 style = "margin: 0px 0px 10px 20px; width: 100%;"> Project </h5>
+
+                        <select id = "createTaskProject" class = "form-select" aria-label = "Default select example" style = "margin: 0px 40px 40px 20px; width: 300px; height: 30px;">
+                            <option value = "0 - No Project" selected>Open this select menu</option>
+                            <option value = "Project One">Project One</option>
+                            <option value = "Project Plutonium">Project plutonium</option>
+                            <option value = "Project 101">Project: 101</option>
+                        </select>
+
+                    </div>
+
+                    <div style="margin-left: 60px;">
+
+                        <h5 style = "margin: 0px 0px 10px 20px; width: 100%;"> Due Date </h5>
+                        <input id = "createTaskDue" style = "margin: 0px 40px 40px 20px; width: 300px;" type = "date" />
+
+                    </div>
+
+                    <button id = "createTaskButton" type = "button" class = "btn btn-success" style = "margin:auto; display: block;" onclick = "createElement2();">Create Task</button>
+                    <button id = "editTaskButton" type = "button" class = "btn btn-success" style = "margin:auto;" onclick = "editElement();">Edit Task</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div> -->
+    <div id="viewTaskOverlay" class="overlay">
+        <div>
+            <div id="viewTask" class="taskOverlay">
+                <div class="mb-3 h-100">
+                    <div class="tasks-header mb-3">
+                        <p style="margin-bottom: 0px; color: #FFFFFF;">
+                            <b>Task View</b>
+                            <svg class="clickable-image" style="position: absolute; right: 3; top: 3;" xmlns="http://www.w3.org/2000/svg" version="1.1" width="35" height="35" style="float:left" onclick="$('#viewTaskOverlay').fadeOut()">
+                                <defs>
+                                    <filter id="colorMask1">
+                                        <feFlood flood-color="#ffffff" result="flood" />
+                                        <feComposite in="flood" in2="SourceAlpha" operator="atop"/>
+                                    </filter>
+                                </defs>
+                                <image style="display: inline-block" width="100%" height="100%" xlink:href="Assets/close.png" filter="url(#colorMask1)" />
+                            </svg>
+                        </p>
+                    </div>
+                    <div class="taskTitleDescDiv">
+                        <div class="taskAttr">
+                            <img src="Assets/svg-icons/task-list.svg">
+                            <h3 id="viewTaskTitle">  Yup! Task title </h3>
+                        </div>
+                        <p id="viewTaskDesc" style="overflow: auto; white-space: normal; word-break: break-word; width: 90%; height: 80%; margin-left: 5.25%; font-size: 15px;" >Hey guys, did you know that in terms of human companionship, Flareon is objectively the most huggable Pokemon? While their maximum temperature is likely too much for most, they are capable of controlling it, so they can set themselves to the perfect temperature for you. Along with that, they have a lot of fluff, making them undeniably incredibly soft to touch.</p>
+                    </div>
+
+                    <div class="taskAttr">
+                        <img src="Assets/user.png" >
+                        <h5 id="viewTaskAssignedBy">  Manager #3 </h5>
+                    </div>
+
+                    <div class="taskAttr">
+                        <img src="Assets/rocket2.png" height="30px" width="30px" class="my-auto mr-2">
+                        <h5 id="viewTaskProject">  Project Cleansiness </h5>
+                    </div>
+
+                    <div class="taskAttr">
+                        <img src="Assets/calender.png" height="30px" width="30px" class="my-auto mr-2">
+                        <h5 id="viewTaskDuedate">   23/5/2024 </h5>
+                    </div>
+
+                    <div style="margin-left: 5.25%; position:absolute; bottom: 0; vertical-align: text-bottom; margin-bottom: 1%">
+                        <p style="display: inline-block; margin-bottom: 0;">For inquiries about the task, email   &nbsp</p>
+                        <a id="taskViewEmail" style="display: inline-block;">
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="20" height="20" style="vertical-align: text-bottom">
+                                <defs>
+                                    <filter id="colorMask2">
+                                        <feFlood flood-color="#0000ff" result="flood" />
+                                        <feComposite in="flood" in2="SourceAlpha" operator="atop"/>
+                                    </filter>
+                                </defs>
+                                <image width="100%" height="100%" xlink:href="Assets/email.png" filter="url(#colorMask2)" />
+                            </svg>
+                            <p style="color: #0000EE; display: inline-block; margin-bottom: 0;">example@email.com</p>
+                        </a>
+                    </div
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div id="confirmTaskOverlay" class="overlay">
+        <div id="confirmOverlay" class="testOverlay">
+            <div class="mb-3 h-100">
+                <div class="tasks-header mb-3 w-100">
+                    <p style="margin-bottom: 0px; font-size: 20px; color: #FFFFFF;">
+                        <b>Submit Confirm</b>
+                        <svg class="clickable-image" style="position: absolute; right: 3; top: 3;" xmlns="http://www.w3.org/2000/svg" version="1.1" width="25" height="25" style="float:left" onclick="$('#confirmTaskOverlay').fadeOut()">
+                            <defs>
+                                <filter id="colorMask3">
+                                    <feFlood flood-color="#ffffff" result="flood" />
+                                    <feComposite in="flood" in2="SourceAlpha" operator="atop"/>
+                                </filter>
+                            </defs>
+                            <image style="display: inline-block" width="100%" height="100%" xlink:href="Assets/close.png" filter="url(#colorMask3)" />
+                        </svg>
+                    </p>
+                </div>
+                <p class="mx-auto text-center"> Confirm the submittion of the task?</p>
+                <div class="d-flex justify-content-center">
+                    <button id="confirmButton" type="button" class="btn button-grey" onclick="confirmTask(); $('#confirmLoading').show();">
+                        <div id="confirmLoading" class="spinner-grow text-success spinner-grow-sm mr-1" role="status" style="float: left; display: none;"></div> Confirm
+                    </button>
+                    <button type="button" class="btn ml-5 button-grey-2" onclick="$('#confirmTaskOverlay').fadeOut();">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<div style="margin-bottom: 100px;"></div>
+<button onclick="testing();"></button>
+
+    <div id="checkmarkOverlay" class="overlay" style="justify-content: center;">
+        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"> <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/> <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+        </svg>
+    </div>
+
+
+</body>
+<script>
+function createElement2() {
+    var uniqueId;
+    uniqueId = "task-" + new Date().getTime();
+
+    var extractedInfoTitle;
+    var extractedInfoDesc;
+    var extractedInfoDate;
+    var extractedInfoProject;
+
+    extractedInfoTitle =   $("#createTaskTitle").val();
+    extractedInfoDesc =    $("#createTaskDesc").val();
+    extractedInfoProject = $("#createTaskProject").val();
+    extractedInfoDate =    "Due: "+$("#createTaskDue").val();
+    extractedDateObject = new Date(extractedInfoDate);
+
+    newElement2(uniqueId, extractedInfoTitle, extractedInfoDate);
+}
+function newElement2(id, title, date, pin, status, fadeInDelay = 100) {
+    var ul = document.getElementById('taskList');
+    date = new Date(date);
+
+    //creates unique id
+
+    var li = document.createElement('button');
+    li.setAttribute("class", "mx-auto");
+    li.setAttribute("style", "display: block; margin-bottom: 10px; width: 100%;");
+
+    currentDate = new Date();
+
+    var taskDiv = document.createElement('div');
+    taskDiv.setAttribute("class", "grid-container2 task-node");
+    li.id = id;
+    li.setAttribute("draggable", "true");
+
+    li.style.background = "none";
+    li.style.border = "none";
+
+    var taskPin = document.createElement('div');
+    taskPin.setAttribute("class", "rectangle2");
+    taskPin.setAttribute("style", "margin-left: 30px;");
+
+    var pinClicked = false;
+    if (pin === '1') pinClicked = true;
+
+    var pin = document.createElement('img');
+    pin.setAttribute("class", "mx-auto");
+    pin.setAttribute("width", "45%");
+    pin.setAttribute("height", "45%");
+
+    if (pinClicked) {
+        pin.setAttribute("src", "Assets/star-fill.png");
+    } else {
+        pin.setAttribute("src", "Assets/star-empty.png");
+    }
+
+    taskPin.addEventListener("click", function () {
+        event.stopPropagation();
+        var insideImg = $(this).children('img');
+        if (pinClicked) {
+            insideImg.attr("src", "Assets/star-empty.png");
+            pinClicked = false;
+        } else {
+            insideImg.attr("src", "Assets/star-fill.png");
+            pinClicked = true;
+        }
+        pinTask($(this).parent().parent().attr("id"), pinClicked);
+    });
+
+    taskPin.appendChild(pin);
+    taskDiv.appendChild(taskPin);
+
+    var taskInnerDiv1 = document.createElement('div');
+    taskInnerDiv1.setAttribute("class", "task-div-1");
+
+    var taskTitle = document.createElement('h3');
+    taskTitle.innerText = title;
+    taskInnerDiv1.appendChild(taskTitle);
+
+    /*var taskDesc = document.createElement('p');
+    taskDesc.setAttribute("class", "task-description");
+    taskDesc.innerText = extractedInfoDesc;
+    taskInnerDiv1.appendChild(taskDesc);*/
+
+    /*******/
+
+    var dueDateDiv = document.createElement('div');
+    dueDateDiv.setAttribute("class", "dueDate-div");
+
+    var stopwatchIcon = document.createElement('img');
+    stopwatchIcon.setAttribute("src", "Assets/svg-icons/stopwatch.svg");
+    stopwatchIcon.setAttribute("width", "40");
+    stopwatchIcon.setAttribute("height", "40");
+    stopwatchIcon.setAttribute("style", "display: block;");
+    dueDateDiv.appendChild(stopwatchIcon);
+
+    var taskDue = document.createElement('u');
+    /* extractedInfoDate = $("#createTaskDue").val(); */
+    taskDue.setAttribute("class", "task-duedate");
+    taskDue.innerText = dateToString(date);
+    dueDateDiv.appendChild(taskDue);
+
+    /*******/
+
+    taskDiv.appendChild(taskInnerDiv1);
+    taskDiv.appendChild(dueDateDiv);
+
+    var taskQuestion = document.createElement('div');
+    taskQuestion.setAttribute("class", "rectangle2");
+
+    var question = document.createElement('img');
+    question.setAttribute("class", "mx-auto");
+    question.setAttribute("src", "Assets/question2.png");
+    question.setAttribute("width", "40%");
+    question.setAttribute("height", "60%");
+
+    taskQuestion.appendChild(question);
+    taskDiv.appendChild(taskQuestion);
+
+    var taskCheck = document.createElement('div');
+    taskCheck.setAttribute("class", "rectangle2");
+
+    var check = document.createElement('img');
+    check.setAttribute("class", "mx-auto");
+    check.setAttribute("src", "Assets/check.png");
+    check.setAttribute("width", "50%");
+    check.setAttribute("height", "50%");
+    check.setAttribute("style", "margin-left: 5px;");
+
+    if (status != "1") {
+        taskCheck.addEventListener("click", function () {
+            event.stopPropagation();
+            currentSelectedTask = $(this).parent().parent().attr("id");
+            $('#confirmTaskOverlay').fadeIn();
+        });
+    }
+    taskCheck.appendChild(check);
+    taskDiv.appendChild(taskCheck);
+
+    if (status == 1) {
+        li.setAttribute("style", "display: block; margin-bottom: 10px; width: 100%; filter: opacity(0.7);");
+        li.disabled = true;
+    } else {
+        taskQuestion.classList.add("activeButton");
+        taskCheck.classList.add("activeButton");
+    }
+    taskPin.classList.add("activeButton");
+
+
+    $("#createTaskOverlay").fadeOut();
+
+    li.addEventListener("click", function () {
+        selectedID = this.id;
+        viewTask(selectedID);
+        $('#viewTaskOverlay').fadeIn();
+        //$('#createTaskOverlay').fadeIn();
+        //keepInfoOverlay(title, extractedInfoDesc, date, extractedInfoProject);
+        //$('#createTaskButton').hide();
+        //$('#editTaskButton').show();
+    });
+    li.appendChild(taskDiv)
+    ul.appendChild(li);
+    $(li).hide();
+    setTimeout(function () {
+        $(li).fadeIn(250);
+    }, fadeInDelay);
+
+}
+
+function noob() {
+    $.ajax({
+        url: "fetch.php",
+        type: "GET",
+        data: {
+            action: "processQuery",
+            query: "SELECT * FROM Employees"
+        },
+        success: function(data) {
+            console.log(data);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log("Error: " + errorThrown);
+        }
+    });
+}
+(function () {
+    // Variable to store the timeout ID
+    let searchTimeout;
+
+    document.getElementById('taskSearch').addEventListener('input', function(event) {
+        clearTimeout(searchTimeout);
+        const query = event.target.value.trim();
+        var searchType = document.getElementById('dropdownButtonSearch').innerHTML.trim();
+        var filterType = document.getElementById('dropdownButtonFilter').innerHTML.trim();
+
+        // Set a new timeout for 1000 milliseconds (1 second)
+        searchTimeout = setTimeout(function() {
+            dropdownSearchFilter('neither');
+        }, 350);
+    });
+})();
+</script>
+</html>

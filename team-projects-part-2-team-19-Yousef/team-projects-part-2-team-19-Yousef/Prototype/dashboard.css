@@ -1,0 +1,178 @@
+/* Dashboard Page */
+
+/*#team-list-container {
+    margin-top: 50px;
+
+    justify-content: center;
+    padding: 5px;
+    height: 100vh;
+    margin-left: 5%;
+    margin-right: 5%;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+}*/
+
+.team-name {
+    font-size: 24px;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+#team-member-label {
+    font-size: 20px;
+    text-align: center;
+    margin-top: 70px;
+    margin-bottom: 20px;
+}
+
+
+.employee-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0; 
+    width: 100%;
+    height: 80%;
+    transition: transform 0.3s ease-out;
+    overflow-y: auto;
+}
+
+.employee-list-item {
+    width: 100%;
+    height: 50px;
+    background-image: linear-gradient(to right, #A5BEBA, #C5C5C5);
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.employee-list-item:hover {
+    background-color: #887a7a;
+}
+
+.employee-list-item img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    margin-left: 20%;
+}
+
+.employee-list-item p {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-right: auto;
+}
+
+.task-form-container {
+    
+    position: absolute; /* Fixed positioning to keep the form in the same place on screen */
+    top: 1%;
+    right: -100%; /* Initially positioned off-screen to the right */
+    width: 45%; /* Set the width of the form */
+    height: 95%; /* Full height to cover the screen from top to bottom */
+    background-color: #FFF; /* Background color */
+    padding: 20px; /* Padding around the form */
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3); /* Shadow for some depth */
+    transition: right 0.3s ease-out; /* Smooth transition for sliding effect */
+    z-index: 4;
+  }
+
+.dashboard-task-grid-container {
+    display: grid;
+    grid-template-columns: 3% 40% 30% 5% 0%; /* Define 3 equal-width columns */
+    grid-template-rows: auto; /* Define 2 rows with a height of 100px each */
+    grid-gap: 10px; /* Adjust this value for spacing as needed */
+    align-items: center;
+}
+
+.dashboard-task-node {
+    background-color: white;
+    border: 3px solid #97ADAA;
+    height: 70px;
+    border-radius: 10px;
+    position: relative;
+    min-width: 120px;
+}
+
+#taskList {
+    overflow: auto;
+    max-height: 75%;
+}
+
+.tabs {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.project-progress-bar {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#taskProgress {
+    width: 100%;
+    height: 30px;
+}
+
+.charts-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    height: 80%;
+}
+
+.employee-chart-container {
+    flex: 1;
+    max-width: calc(50% - 10px);
+    margin: 5px;
+    height: 270px;
+    justify-content: center;
+    display: flex;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+    margin-top: auto;
+}
+
+.viewButton {
+    border: 3px solid #8DB8B1;
+    color: #000000;
+    background-color: #E5E5E5;
+}
+
+#graphs {
+    display: flex;
+    flex-flow: column wrap;
+}
+#assignTaskContainer, #assignEmployeeContainer {
+    width: 60%;
+    height: 70%;
+    margin: auto;
+}
+#assignTaskOverlay {
+    display: none;
+    z-index: 11;
+}
+#assignEmployeeOverlay {
+    display: none;
+    z-index: 10;
+}
+#assigntaskList {
+    max-height: 85%;
+    overflow: auto;
+}
+#assignGlobalTask {
+    border: 2px solid #8DB8B1;
+}
+#assignEmployeeList {
+    height: 80%;
+    overflow-y: auto;
+}

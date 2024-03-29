@@ -1,0 +1,61 @@
+**********************************************
+*Productivity and Knowledge Management System*
+**********************************************
+
+The PAKM System is a web based application designed for the Make-It-All company.
+The purpose of the system is to make it easier for employees to manage
+their tasks towards their projects and for leaders to manage their projects
+and analyse the progress of theirs projects. The system is also design to record
+information that might later be useful to employees.
+
+To access the PAKM System, simply access any web browser on any device. The system has been
+designed to be used through Google Chrome on Windows 11, however, care has been taken
+to ensure that the system is simple and intuitive to use on any web browser and on
+any device.
+After accessing a web browser, enter the URL address into the search bar to access
+the system.
+
+URL Address:
+----------------------------------------------
+
+----------------------------------------------
+
+Instructions:
+----------------------------------------------
+1. Enter your user details and press the enter key to log in to your account.
+2. Press the three lines at the top-right corner to open the navigation menu where
+	you can access any of the pages available to you.
+
+	a. In the To-Do List page, you can create personal tasks and deadline for
+		yourself to complete.
+
+	b. In the Task Manager, you can view and search for the tasks that have been 
+		assigned to you and information such as when they are due. You can 
+		also pin tasks that you would like to be able to see and revisit 
+		more frequently.
+
+	c. On the Information page, you can create posts and topics with useful
+		information that might help you or others in the future. You can also
+		search for and browse these posts here.
+
+	d. The Dashboard is available only to Team Leaders and Managers. Here, you can
+		see and use the privileges available to you. The privileges might include
+		creating tasks, assigning employees to tasks, removing employees,
+		deleting tasks, viewing project analytics, etc.
+----------------------------------------------
+
+Contributions:
+----------------------------------------------
+Index / Task Manager / Dashboard:
+Yousef Hurani
+Geoffrey Sie
+Robert Forsythe
+
+Home / Information:
+Jaiden Scott
+Oliver Michell
+
+To-Do / Documentation:
+Charlie Ngo
+
+----------------------------------------------

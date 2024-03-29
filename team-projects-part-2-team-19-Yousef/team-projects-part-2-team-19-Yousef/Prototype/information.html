@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang = "en">
+
+<script>
+
+    function getCookie(name) {
+
+        const cookieName = name + "=";
+        const decodedCookie = decodeURIComponent(document.cookie);
+        console.log(decodedCookie);
+        const cookieArray = decodedCookie.split(';');
+
+        for (let i = 0; i < cookieArray.length; i++) {
+            let cookie = cookieArray[i];
+
+            while (cookie.charAt(0) === ' ') {
+                cookie = cookie.substring(1);
+            }
+
+            if (cookie.indexOf(cookieName) === 0) {
+                const value = cookie.substring(cookieName.length, cookie.length);
+                console.log(`Found cookie "${name}" with value "${value}"`);
+                return value;
+            }
+
+        }
+
+        console.log(`Cookie "${name}" not found`);
+        return "InvalidUser";
+
+    }
+
+</script>
+
+<head>
+
+    <meta charset = "utf-8">
+    <meta name = "viewport" content = "width = device-width, initial-scale = 1">
+
+    <!-- External scripts such as Bootstrap -->
+    <link rel = "stylesheet" href = "https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity = "sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin = "anonymous">
+
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src = "https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity = "sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin = "anonymous"></script>
+    <script src = "https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity = "sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin = "anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/string-similarity/umd/string-similarity.min.js"></script>
+    <link rel = "stylesheet" href = "https://site-assets.fontawesome.com/releases/v6.4.0/css/all.css">
+    <link rel = "stylesheet" href = "https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-solid.css">
+    <link rel = "stylesheet" href = "https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-regular.css">
+    <link rel = "stylesheet" href = "https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-light.css">
+
+    <!-- External CSS and JavaScript files -->
+    <script src = "scripting.js"></script>
+    <script src = "information.js" defer></script>
+    <link rel = "stylesheet" type = "text/css" href = "stylesheet.css">
+
+    <title> Information </title>
+    <link rel = "icon" href = "Assets/Logo.ico" type = "image/x-icon">
+
+</head>
+
+<body class = "index" onload = "LoadPosts()">
+
+    <script src = "navBar.js"></script>
+
+    <div class = "knowManContents">
+
+        <div id = "topicsBlock">
+
+            <h1 class = "inline">Knowledge Managment</h1>
+            
+            <button class = "btn btn-light" id = "createPostButton" onclick = "clearOverlay(); SetCreatePostVis(true)">Create post</button>
+			
+			<button class = "btn btn-light" id = "createPostButton" onclick = "clearOverlay(); SetCreateTopicVis(true)">Create topic</button>
+                        
+                        <div class = "input-group-prepend">
+
+                            <button class = "btn btn-light" id = "searchPostButton" onclick = "LoadPosts()">
+
+                                <span class = "input-group-text" id = "basic-addon1">
+
+                                    <img src = "Assets/search.png" width = "25" height = "25">
+
+                                </span>
+
+                            </button>
+                        
+			    <input type = "text" id = "searchPost" class = "form-control" placeholder = "Search posts...">
+
+                        </div>
+			
+            <div id = "topicsList">
+
+                <ul>
+
+                    <details>
+                        <summary><b>Filters:</b></summary>
+                        <li><button onclick = "SetMyPosts(false)"><u>All Posts</u></button></li>
+                        <li><button onclick = "SetMyPosts(true)"><u>My Posts</u></button></li>
+                    </details>
+
+                        <div id = "topicsDiv"></div>
+                        <details>
+                            <summary><b>Topics:</u></b></summary>
+							<div id = "addTopicsDiv">
+							</div>
+                        </details>
+                        <div id = "topicsDiv"></div>
+					<p id = "filterDisplayText"></p>
+
+                </ul>
+
+            </div>
+
+        </div>
+        <div id = "postsBlock"> <!-- Posts go in here -->
+
+        </div>
+
+        <div id = "createPostOverlay" class = "overlay">
+
+            <div>
+
+                <div id = "createPost">
+
+                    <div class = "input-group mb-3">
+
+                        <h5 style = "margin: 25px 0px 10px 20px; width: 90%;"> Post Title </h5>
+                        <a id = "closeCreatePost" style = "width: 5%;">
+                        <img src = "Assets/svg-icons/arrow-left.svg" class = "clickable-image" alt = "CollapseIcon" width = "20" height = "20" style = "filter: invert(1); margin: auto;" onclick = "SetCreatePostVis(false)">
+                        </a>
+                        <input type = "text" id = "postTitle" class = "form-control" maxlength = "60" aria-label = "Default" aria-describedby = "inputGroup-sizing-default">
+                        <h5 style = "margin: 0px 0px 10px 20px; width: 100%;"> Post Description </h5>
+                        <textarea id = "postDesc" style = "margin: 0px 40px 40px 20px; width: 740px; height: 250px; resize: none;" aria-label = "With textarea"></textarea>
+						<!--<h5 style = "margin: 0px 0px 10px 20px; width: 100%;"> Post viewed by </h5>-->
+                        <button id = "submitPostButton" type = "button" class = "btn btn-success" style = "margin: auto;">Submit Post</button>
+						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style = "margin: auto;" id="topicDropdownButton">No Topic
+						<span class="caret"></span></button>
+						<ul class="dropdown-menu" id="topicDropdown">
+						</ul>
+                    </div>
+
+            </div>
+
+        </div>
+
+    </div>
+	
+	<div id = "createTopicOverlay" class = "overlay">
+
+            <div>
+
+                <div id="createPost" style="width: 500px; height: 300px;">
+    <div class="input-group mb-3">
+        <h5 style="margin: 25px 0px 10% 20px;width: 100%;"> Add a new topic </h5>
+        <a id="closeCreatePost" style="width: 5%;position: absolute;right: 10px;">
+            <img src="Assets/svg-icons/arrow-left.svg" class="clickable-image" alt="CollapseIcon" width="20" height="20" style="filter: invert(1); margin: auto;" onclick="SetCreateTopicVis(false)">
+        </a>
+        <div style="margin-right: auto;width: 80%;margin-left: auto;">
+            <input type="text" id="topicInput" class="form-control" maxlength="60" aria-label="Default" aria-describedby="inputGroup-sizing-default" style="margin-bottom: 5%;">
+            <!--<h5 style="margin: 0px 0px 10px 20px; width: 100%;"> Post viewed by </h5>-->
+            <button id="submitTopicButton" type="button" class="btn btn-success mt-5" style="margin: auto;" onclick="SubmitTopic()">Submit Topic</button>
+        </div>
+    </div>
+</div>
+        </div>
+
+    </div>
+
+
+    <div id = "inviteOverlay" class = "overlay">
+
+        <div>
+
+            <div id = "createInvite">
+
+                <div class = "input-group mb-3">
+
+                    <h5 style = "margin: 25px 0px 10px 20px; width: 90%;"> Email </h5>
+                    <a id = "closeInvite" style = "width: 5%;" onclick = '$("#inviteOverlay").fadeOut();'>
+                        <img src = "Assets/svg-icons/arrow-left.svg" class = "clickable-image" alt = "CollapseIcon" width = "20" height = "20" style = "filter: invert(1); margin: auto;">
+                    </a>
+
+                    <div class = "input-group mb-3" style = "margin: 0px 40px 15px 20px; width: 750px">
+
+                        <div class = "input-group-prepend">
+
+                            <span class = "input-group-text" id = "basic-addon1">@</span>
+
+                        </div>
+
+                        <input id = "postInvite" type="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
+
+                    </div>
+
+                    <h5 style = "margin: 0px 0px 10px 20px; width: 100%;"> Additional Content </h5>
+                    <textarea id = "postInviteDesc" style = "margin: 0px 40px 40px 20px; width: 740px; height: 250px; resize: none;" aria-label = "With textarea"></textarea>
+                    <button id = "submitInviteButton" type = "button" class = "btn btn-success" style = "margin: auto;" onclick="$('#inviteOverlay').fadeOut();">Send Invite</button>
+
+                </div>
+
+            </div>
+
+        </div>
+	
+    </div>
+	
+	<div id = "editPostOverlay" class = "overlay">
+
+            <div>
+
+                <div id = "editPost">
+
+                    <div class = "input-group mb-3">
+
+                        <h5 style = "margin: 25px 0px 10px 20px; width: 90%;"> Post Title </h5>
+                        <a id = "closeEditPost" style = "width: 5%;">
+                        <img src = "Assets/svg-icons/arrow-left.svg" class = "clickable-image" alt = "CollapseIcon" width = "20" height = "20" style = "filter: invert(1); margin: auto;" onclick = "SetEditPostVis(false)">
+                        </a>
+                        <input type = "text" id = "editPostTitle" class = "form-control" maxlength = "60" aria-label = "Default" aria-describedby = "inputGroup-sizing-default">
+                        <h5 style = "margin: 0px 0px 10px 20px; width: 100%;"> Post Description </h5>
+                        <textarea id = "editPostDesc" style = "margin: 0px 40px 40px 20px; width: 740px; height: 250px; resize: none;" aria-label = "With textarea"></textarea>
+						<!--<h5 style = "margin: 0px 0px 10px 20px; width: 100%;"> Post viewed by </h5>-->
+                        <button id = "savePostButton" type = "button" class = "btn btn-success" style = "margin: auto;" onclick = "EditPost()">Save Post</button>
+						<button id = "deletePostButton" type = "button" class = "btn btn-danger" style = "margin: auto;" onclick = "DeletePost()">Delete Post</button>
+
+                    </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

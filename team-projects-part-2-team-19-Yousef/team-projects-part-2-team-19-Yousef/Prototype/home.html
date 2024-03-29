@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang = "en">
+
+<script>
+    
+    function getCookie(name) {
+
+        const cookieName = name + "=";
+        const decodedCookie = decodeURIComponent(document.cookie);
+        console.log(decodedCookie);
+        const cookieArray = decodedCookie.split(';');
+
+        for (let i = 0; i < cookieArray.length; i++) {
+            let cookie = cookieArray[i];
+
+            while (cookie.charAt(0) === ' ') {
+                cookie = cookie.substring(1);
+            }
+
+            if (cookie.indexOf(cookieName) === 0) {
+                const value = cookie.substring(cookieName.length, cookie.length);
+                console.log(`Found cookie "${name}" with value "${value}"`);
+                return value;
+            }
+
+        }
+
+        console.log(`Cookie "${name}" not found`);
+        return "InvalidUser";
+
+    };
+    
+
+</script>
+
+<head>
+
+    <meta charset = "utf-8">
+    <meta name = "viewport" content = "width = device-width, initial-scale = 1">
+
+    <!-- External scripts such as Bootstrap -->
+    <link rel = "stylesheet" href = "https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity = "sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin = "anonymous">
+
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src = "https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity = "sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin = "anonymous"></script>
+    <script src = "https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity = "sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin = "anonymous"></script>
+
+    <link rel = "stylesheet" href = "https://site-assets.fontawesome.com/releases/v6.4.0/css/all.css">
+    <link rel = "stylesheet" href = "https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-solid.css">
+    <link rel = "stylesheet" href = "https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-regular.css">
+    <link rel = "stylesheet" href = "https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-light.css">
+
+    <!-- External CSS and JavaScript files -->
+    <script src = "scripting.js"></script>
+    <script src = "home.js" defer></script>
+
+    <link rel = "stylesheet" type = "text/css" href = "stylesheet.css">
+
+    <title> Home </title>
+    <link rel = "icon" href = "Assets/Logo.ico" type = "image/x-icon">
+
+</head>
+
+<body class = "index">
+
+    <script src = "navBar.js"></script>
+
+    <div class = "companyUpdatesBlock">
+
+        <div id = "companyUpdatesHead">
+
+            <p style = "margin-bottom: 0px; color: #8C8C8C"><b>Company Updates</b></p>
+
+        </div>
+
+        <div id = companyUpdates>
+
+            <div id = "myCarousel" class = "carousel slide" data-ride = "carousel">
+
+                <div class = "carousel-inner" id = "carousel-inner"></div>
+
+                <style>
+
+                    .carousel-control-prev-icon,
+                    .carousel-control-next-icon {
+                        filter: invert(100%);
+                    }
+
+                </style>
+
+                <a class = "carousel-control-prev" href = "#myCarousel" role = "button" data-slide = "prev">
+                    <span class = "carousel-control-prev-icon" aria-hidden = "true"></span>
+                    <span class = "sr-only">Previous</span>
+                </a>
+
+                <a class = "carousel-control-next" href = "#myCarousel" role = "button" data-slide = "next">
+                    <span class = "carousel-control-next-icon" aria-hidden = "true"></span>
+                    <span class = "sr-only">Next</span>
+                </a>
+
+            </div>
+
+        </div>
+
+   </div>
+
+   <div class = "pinnedTasksBlock">
+
+        <div id = "pinnedTasksHead">
+
+            <hr style = "border-top: 3px dotted #BBBBBB; width: 97%;" >
+            <b>Pinned Tasks</b>
+
+        </div>
+
+        <div id = pinnedTasks>
+            <ul>
+            </ul>
+
+        </div>
+
+    </div>
+
+    <div id = "inviteOverlay" class = "overlay">
+
+        <div>
+
+            <div id = "createInvite">
+
+                <div class = "input-group mb-3">
+
+                    <h5 style = "margin: 25px 0px 10px 20px; width: 90%;"> Email </h5>
+                    <a id = "closeInvite" style = "width: 5%;" onclick='$("#inviteOverlay").fadeOut();'>
+                        <img src = "Assets/svg-icons/arrow-left.svg" class = "clickable-image" alt = "CollapseIcon" width = "20" height = "20" style = "filter: invert(1); margin: auto;">
+                    </a>
+
+                    <div class="input-group mb-3" style = "margin: 0px 40px 15px 20px; width: 750px">
+
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text" id="basic-addon1">@</span>
+
+                        </div>
+
+                            <input id = "postInvite" type="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
+
+                    </div>
+
+                        <h5 style = "margin: 0px 0px 10px 20px; width: 100%;"> Additional Content </h5>
+                        <textarea id = "postInviteDesc" style = "margin: 0px 40px 40px 20px; width: 740px; height: 250px; resize: none;" aria-label = "With textarea"></textarea>
+                        <button id = "submitInviteButton" type = "button" class = "btn btn-success" style = "margin: auto;" onclick="$('#inviteOverlay').fadeOut();">Send Invite</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+
+<script>
+
+    function CreatePost(subject, description) {
+
+        // Create div
+        const postDiv = document.createElement("div");
+        postDiv.className = "carousel-item"; // Add "carousel-item" class
+
+        // Apply CSS styles
+        postDiv.style.backgroundColor = "white";
+        postDiv.style.textAlign = "left";
+        postDiv.style.height = "125px";
+        postDiv.style.paddingLeft = "10px";
+        postDiv.style.paddingRight = "10px";
+        postDiv.style.paddingTop = "5px";
+        postDiv.style.paddingBottom = "5px";
+        postDiv.style.border = "2px solid black";
+        postDiv.style.borderRadius = "10px";
+        postDiv.style.marginLeft = "10%";
+
+        // Create post title (subject)
+        const postTitle = document.createElement("h2");
+        postTitle.textContent = subject;
+
+        // Create post description
+        const postDescription = document.createElement("p");
+        postDescription.textContent = description;
+
+        // Join elements together
+        postDiv.appendChild(postTitle);
+        postDiv.appendChild(postDescription);
+
+        // Allow text to break and wrap to a new line
+        postDescription.style.wordWrap = "break-word";
+
+        // Append the postDiv to the carousel
+        const carouselInner = document.getElementById("carousel-inner");
+        carouselInner.appendChild(postDiv);
+
+    }
+
+    function LoadTask1() {
+
+        const httpRequestTask = new XMLHttpRequest();
+        httpRequestTask.onreadystatechange = function () { //Response from server, contains posts received from database
+
+            if (this.readyState == 4 && this.status == 200) {
+                const postsArray = JSON.parse(this.responseText);
+                const carouselInner = document.getElementById("carousel-inner");
+
+                // Clear existing carousel items
+                carouselInner.innerHTML = '';
+
+                // Create and append carousel items for each post
+                postsArray.forEach((post, index) => {
+                    CreatePost(post.Title, post.Content);
+
+                    // Set the first post as active
+                    if (index === 0) {
+                        const carouselItems = carouselInner.querySelectorAll('.carousel-item');
+                        carouselItems[index].classList.add('active');
+
+                    }
+
+                });
+
+            }
+
+        };
+
+    // Retrieve data from database by sending an httpRequest
+    httpRequestTask.open("POST", "informationServer.php", true);
+    httpRequestTask.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    httpRequestTask.send("TITLE=none" + "&DESC=none" + "&GETPOSTS=True" + "&COMPANYUPDATES=True");
+
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const loginStatus = urlParams.get('member');
+        console.log(loginStatus);
+
+        // Load posts when the DOM content is loaded
+        fetchHomePosts();
+        fetchHomeTasks();
+
+    });
+
+</script>

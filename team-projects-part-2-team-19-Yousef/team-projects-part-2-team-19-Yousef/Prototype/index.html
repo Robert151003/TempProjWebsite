@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width = device-width, initial-scale = 1">
+
+    <!-- External scripts such as Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.0/css/all.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-solid.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-regular.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-light.css">
+
+    <!-- External CSS and JavaScript files -->
+    <script src="scripting.js"></script>
+    <script src="index.js"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
+
+    <title> Login </title>
+    <link rel="icon" href="Assets/Logo.ico" type="image/x-icon">
+
+</head>
+
+<body class="index">
+
+    <div class="TopMenu">
+
+        <img src="Assets/Logo.png" class="LogoImg">
+
+    </div>
+
+    <div class="Login">
+            <div class="username">
+
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username">
+
+            </div>
+
+            <div class="password">
+
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password">
+
+            </div>
+
+            <div class="loginBtn">
+                <!--<input type="button" value="Login" id="loginButton" onclick="submit(); window.location.href = 'home.html';" class="btn btn-primary"><br>-->
+                <button id="loginButton" type="submit" onclick="submitLogin();">Login</button>
+            </div>
+
+            <p id="incorrect" style="visibility: hidden; color: red">Incorrect Username or Password</p><br />
+
+            <div>
+                <a onclick="$('#resetPasswordOverlay').fadeIn();" style="color:blue; text-decoration:underline">Forgotten your password?</a>
+            </div>
+	     <div class="mt-3">
+                <a href="register.html" style="color:blue; text-decoration:underline">Don't have an account?</a>
+            </div>
+
+
+    </div>
+
+
+
+    <div id="resetPasswordOverlay" class="overlay">
+
+        <div>
+            <form action="resetPassword.php" method="post">
+                <div id="createInvite">
+
+                    <div class="input-group mb-3">
+                        <a id="closeInvite" style="width: 100%;" onclick='$("#resetPasswordOverlay").fadeOut();'>
+                            <img src="Assets/svg-icons/arrow-left.svg" class="clickable-image" alt="CollapseIcon" width="20" height="20" style="filter: invert(1); float: right; margin: 12px 12px 0px 0px;">
+                        </a>
+                        <h2 style="margin: 10% 0% 0% 5%"> Reset your password</h2>
+                        <h6 class="" style="margin: 5% 0% 2% 5%"> If the account exists, we'll email you instructions to reset the password.  </h6>
+
+                        <div class="input-group" style="margin: 0px 5% 5% 5%; width: 90%">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">@</span>
+                            </div>
+                            <input id="email" type="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1" name="newEmail">
+                        </div>
+
+                        <button id="submitRequestButton" type="submit" class="btn btn-success" style="margin: auto;">Send Invite</button>
+
+                        <p id="incorrectParams" style="visibility: hidden; margin: 0px 0px 0px 20px; color: red">Request for the same email sent within the past 5 minutes.</p>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+
+<script>
+    $("#submitRequestButton").click(function() {
+        submitRequest();
+    });
+</script>
